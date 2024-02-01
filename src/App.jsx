@@ -2,8 +2,8 @@ import "./utils/init"
 import './styles/App.css'
 import { Suspense, lazy } from 'react'
 import { BrowserRouter,Routes, Route  } from 'react-router-dom';
-
-const Home = lazy(() => import('./pages/Home'));
+import Home from './pages/Home'
+// const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const ListDashboard = lazy(() => import('./pages/ListDashboard'));
 const SignUp = lazy(() => import('./pages/SignUp'));
@@ -22,9 +22,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<ErrorBoundary name='Home'><Suspense fallback={<h1>Loading</h1>}><Home /></Suspense></ErrorBoundary>}/>
-        <Route path='/sign-up' element={<ErrorBoundary name='SignUp'><SignUp /></ErrorBoundary>}/>
-        <Route path='/login' element={<ErrorBoundary name='Login'><Login /></ErrorBoundary>}/>
+        <Route path='/' element={<ErrorBoundary name='Home'><Home /></ErrorBoundary>}/>
+        <Route path='/sign-up' element={<ErrorBoundary name='SignUp'><Suspense fallback={<h1>Loading</h1>}><SignUp /></Suspense></ErrorBoundary>}/>
+        <Route path='/login' element={<ErrorBoundary name='Login'><Suspense fallback={<h1>Loading</h1>}><Login /></Suspense></ErrorBoundary>}/>
         <Route path='/sign-in' element={<ErrorBoundary name='SignInSide'><SignInSide /></ErrorBoundary>}/>
         <Route path="/list-dashboard" element={<ErrorBoundary name='ListDashboard'><ListDashboard /></ErrorBoundary>}/>
       </Routes>
