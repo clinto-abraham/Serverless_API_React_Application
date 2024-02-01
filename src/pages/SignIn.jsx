@@ -12,6 +12,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { authenticate } from '../services/aws-cognito-service';
+import { Amplify } from 'aws-amplify';
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import UserPool from '../utils/awsExports';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+Amplify.configure(UserPool);
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -30,6 +39,39 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
+    const Navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailErr, setEmailErr] = useState('');
+  const [passwordErr, setPasswordErr] = useState('');
+  const [loginErr,setLoginErr] = useState('');
+
+    const validation = () => {
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      if (email === '' && password === '') {
+        setEmailErr("Email is Required");
+        setPasswordErr("Password is required")
+        resolve({ email: "Email is Required", password: "Password is required" });
+      }
+      else if (email === '') {
+        setEmailErr("Email is Required")
+        resolve({ email: "Email is Required", password: "" });
+      }
+      else if (password === '') {
+        setPasswordErr("Password is required")
+        resolve({ email: "", password: "Password is required" });
+      }
+      else if (password.length < 6) {
+        setPasswordErr("must be 6 character")
+        resolve({ email: "", password: "must be 6 character" });
+      }
+      else {
+        resolve({ email: "", password: "" });
+      }
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -37,6 +79,26 @@ export default function SignInSide() {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    setEmailErr("");
+    setPasswordErr("");
+    validation()
+      .then((res) => {
+        if (res.email === '' && res.password === '') {
+          authenticate(email,password)
+          // eslint-disable-next-line no-unused-vars
+          .then((_data)=>{
+            setLoginErr('');
+            Navigate('/dashboard');
+          },(err)=>{
+            console.log(err);
+            alert(err.message)
+            setLoginErr(err.message)
+          })
+          .catch(err=>console.log(err))
+        }
+      }, err => console.log(err))
+      .catch(err => console.log(err));
   };
 
   return (

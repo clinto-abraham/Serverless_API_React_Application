@@ -1,21 +1,48 @@
+/* eslint-disable react/prop-types */
 import { Amplify } from 'aws-amplify';
-import { Authenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import UserPool from '../utils/awsExports';
-Amplify.configure(UserPool);
+// import UserPool from '../utils/awsExports';
+import amplifyConfiguration from '../amplifyconfiguration.json'
+import { useEffect, useState } from 'react';
+import { Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+Amplify.configure(amplifyConfiguration);
 
-export default function Login() {
+function CognitoAwsLogin({ signOut, user }) {
+  const [seconds, setSeconds] = useState(7);
+  const navigate = useNavigate()
+  
+  // console.log(user)
+  // useEffect(()=> {
+  //   if(seconds < 1 ){
+  //     navigate('/')
+  //   }
+  // },[seconds])
+
+  useEffect(()=> {
+    const timeOut = setInterval(()=> {
+      setSeconds(seconds - 1)
+    }, 1000)
+    return () => clearInterval(timeOut)
+  },[user])
+  
+  const handleSignOut = () => {
+    localStorage.removeItem('user')
+    signOut()
+  }
   return (
-    <Authenticator>
-      {({ signOut, user }) => (
-        <main>
-          <h1>Hello {user.username}</h1>
-          <button onClick={signOut}>Sign out</button>
+        <main className='home'>
+          <Typography variant='h1'>Hello {user?.signInDetails?.loginId}</Typography>
+          <Button onClick={handleSignOut}>Sign out</Button>
+          <Button variant='contained' onClick={()=> navigate('/')}>Home</Button>
+          {/* {user && <Typography variant='paragraph'>You will be redirected to Note app in {seconds}</Typography>} */}
         </main>
-      )}
-    </Authenticator>
   );
 }
+
+const Login = withAuthenticator(CognitoAwsLogin)
+export default Login;
 
 // import { useState } from 'react'
 // import { Button, TextField,Typography } from '@mui/material'

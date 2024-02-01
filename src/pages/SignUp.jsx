@@ -27,6 +27,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 export default function SignUp() {
+  const navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -46,7 +47,7 @@ export default function SignUp() {
       } else {
         console.log(data);
         alert('User Added Successfully');
-        Navigate('/dashboard');
+        navigate('/dashboard');
       }
     });
     console.log({
@@ -177,7 +178,7 @@ export default function SignUp() {
 }
 
 import UserPool from '../utils/awsExports';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 // import { Button, TextField} from '@mui/material'
 // import { useState } from 'react'

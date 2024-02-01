@@ -1,3 +1,4 @@
+// import awsmobile from "../aws-exports";
 import "./init"
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 
@@ -13,9 +14,22 @@ const poolData = {
   UserPoolId: USER_POOL_ID,
   ClientId: USER_POOL_APP_CLIENT_ID,
   endpoint: COGNITO_URL,
-  // userPoolId: USER_POOL_ID,
-  // userPoolWebClientId: USER_POOL_APP_CLIENT_ID
-  // ClientSecret: USER_POOL_CLIENT_SECRET
+  AdvancedSecurityDataCollectionFlag: true,
 };
 
-export default new CognitoUserPool(poolData);
+export const cognito = new CognitoUserPool({
+  UserPoolId: USER_POOL_ID,
+  ClientId: USER_POOL_APP_CLIENT_ID,
+  endpoint: COGNITO_URL,
+  AdvancedSecurityDataCollectionFlag: true,
+})
+console.log(cognito, cognito.client?.endpoint)
+// export default new CognitoUserPool(poolData);
+export default poolData ;
+
+
+//  UserPoolId: string;
+	// 	ClientId: string;
+	// 	endpoint?: string;
+	// 	Storage?: ICognitoStorage;
+	// 	AdvancedSecurityDataCollectionFlag?: boolean;

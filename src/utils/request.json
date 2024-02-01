@@ -1,0 +1,58 @@
+{
+    "context": {
+        "functionVersion": "$LATEST",
+        "logGroupName": "/aws/lambda/serverless-api-list-lambda",
+        "functionName": "serverless-api-list-lambda",
+        "memoryLimitInMB": "128",
+        "logStreamName": "2024/02/01/[$LATEST]1e2414df1e824cb19979d6d024d5c1b9",
+        "awsRequestId": "4ba7f170-e9ab-45e7-8512-34962ca42409",
+        "invokedFunctionArn": "arn:aws:lambda:ap-south-1:675437545417:function:serverless-api-list-lambda",
+        "callbackWaitsForEmptyEventLoop": true
+    },
+    "event": {
+        "headers": {
+            "content-length": "25",
+            "x-amzn-tls-version": "TLSv1.2",
+            "x-forwarded-proto": "https",
+            "postman-token": "3c223a0c-cf83-4105-9620-5f107e6b3685",
+            "x-forwarded-port": "443",
+            "x-forwarded-for": "27.0.53.126",
+            "accept": "*/*",
+            "x-amzn-tls-cipher-suite": "ECDHE-RSA-AES128-GCM-SHA256",
+            "x-amzn-trace-id": "Root=1-65bbc357-6f47d1640af8872b77c9c1a6",
+            "host": "mphrheqyck36nud46umawwpcr40gzish.lambda-url.ap-south-1.on.aws",
+            "content-type": "application/json",
+            "cache-control": "no-cache",
+            "accept-encoding": "gzip, deflate, br",
+            "user-agent": "PostmanRuntime/7.33.0"
+        },
+        "isBase64Encoded": false,
+        "rawPath": "/health-check",
+        "routeKey": "$default",
+        "requestContext": {
+            "accountId": "anonymous",
+            "timeEpoch": 1706804055364,
+            "routeKey": "$default",
+            "stage": "$default",
+            "domainPrefix": "mphrheqyck36nud46umawwpcr40gzish",
+            "requestId": "4ba7f170-e9ab-45e7-8512-34962ca42409",
+            "domainName": "mphrheqyck36nud46umawwpcr40gzish.lambda-url.ap-south-1.on.aws",
+            "http": {
+                "path": "/health-check",
+                "protocol": "HTTP/1.1",
+                "method": "PATCH",
+                "sourceIp": "27.0.53.126",
+                "userAgent": "PostmanRuntime/7.33.0"
+            },
+            "time": "01/Feb/2024:16:14:15 +0000",
+            "apiId": "mphrheqyck36nud46umawwpcr40gzish"
+        },
+        "queryStringParameters": {
+            "file": "so",
+            "name": "clinto"
+        },
+        "body": "{\n    \"john\": \"prophet\"\n}",
+        "version": "2.0",
+        "rawQueryString": "name=clinto&file=so"
+    }
+}
