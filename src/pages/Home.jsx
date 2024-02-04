@@ -14,13 +14,6 @@ const clinto = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphbWVzQHl
 function Home({ signOut, user }) {
   const [notes, setNotes] = useState([]);
   const [inputText, setInputText] = useState("");
-  // const [clinto, setClinto] = useState('')
-  // const token = localStorage.getItem('clinto')
-  
-  // useEffect(()=> {
-  //   if(token) setClinto(token)
-  // },[token])
-  console.log(notes, 23)
 
   useEffect(()=> {
     const uniqueID = user?.userId
@@ -52,7 +45,7 @@ function Home({ signOut, user }) {
   };
 
   const deleteNote = (id) => {
-    const filteredNotes = notes.filter((note) => note.id !== id);
+    const filteredNotes = notes.filter((note) => note.listID !== id);
     setNotes(filteredNotes);
     apiBearer.patch(`/delete-notes-by-id?id=${id}&token=${clinto}`).then(data => console.log(data.message)).catch(err => console.log(err))
   };
@@ -65,10 +58,8 @@ function Home({ signOut, user }) {
     const data = JSON.parse(localStorage.getItem("Notes"))
     api.get(`/list-all-notes?token=${clinto}`).then(res => {
       if(res.data){
-        console.log('hit', 67, res.data.data)
         setNotes(res.data.data)
       } else if (data) {
-        console.log('hit', 70)
         setNotes(data);
       }
     }).catch(err => console.log(err))
@@ -83,7 +74,7 @@ function Home({ signOut, user }) {
           key={note.listID + note.description}
           id={note.listID}
           text={note.description}
-          deleteNote={deleteNote}
+          deleteNote={() => deleteNote(note.listID)}
         />
       ))}
       <CreateNote
@@ -99,35 +90,3 @@ function Home({ signOut, user }) {
 
 const HomePage = withAuthenticator(Home)
 export default HomePage;
-// key={note.id}
-          // id={note.id}
-          // text={note.text}
-
-// import { useTransition } from 'react';
-// import { useNavigate } from 'react-router-dom'
-// // import { cognitoURL } from '../utils/awsExports';
-
-// const Home = () => {
-//     const Navigate = useNavigate();
-//     const [pending, startTransition] = useTransition();
-    
-//     console.log(pending)
-//     return (
-//         <>
-//             <div className='home'>
-//                 <h1>Welcome to TOC </h1>
-//                 <h6>Top Of Cliff Developer</h6>
-//                 <div className='homeButtons'>
-//                     <a href='https://serverless-dockets-manager.auth.ap-south-1.amazoncognito.com/login?client_id=bp9sla9jgtnlfd34qgpauv6rc&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2F'>
-//                         Sign In
-//                     </a>
-//                     <button style={{ margin: '10px' }} onClick={() => startTransition(() => Navigate('/login'))}>
-//                         Login
-//                     </button>
-//                 </div>
-//             </div>
-//         </>
-//     )
-// }
-
-// export default Home
