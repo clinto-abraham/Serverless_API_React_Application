@@ -1,0 +1,47 @@
+{
+    "path": "/",
+    "method": "GET",
+    "message": "Welcome to serverless api",
+    "event": {
+        "headers": {
+            "content-length": "17",
+            "x-amzn-tls-version": "TLSv1.2",
+            "x-forwarded-proto": "https",
+            "postman-token": "9845a298-4b5a-44ca-a108-44785a467bcd",
+            "x-forwarded-port": "443",
+            "x-forwarded-for": "27.0.53.126",
+            "accept": "*/*",
+            "x-amzn-tls-cipher-suite": "ECDHE-RSA-AES128-GCM-SHA256",
+            "x-amzn-trace-id": "Root=1-65bd096e-04989e482ceeb2617143f294",
+            "host": "u2xb63vnab7qm5rfud3evncbsq0fvvqm.lambda-url.ap-south-1.on.aws",
+            "content-type": "text/plain",
+            "cache-control": "no-cache",
+            "accept-encoding": "gzip, deflate, br",
+            "user-agent": "PostmanRuntime/7.33.0"
+        },
+        "isBase64Encoded": false,
+        "rawPath": "/",
+        "routeKey": "$default",
+        "requestContext": {
+            "accountId": "anonymous",
+            "timeEpoch": 1706887534339,
+            "routeKey": "$default",
+            "stage": "$default",
+            "domainPrefix": "u2xb63vnab7qm5rfud3evncbsq0fvvqm",
+            "requestId": "fd89d03f-d053-4fbe-85d6-61ac08caed85",
+            "domainName": "u2xb63vnab7qm5rfud3evncbsq0fvvqm.lambda-url.ap-south-1.on.aws",
+            "http": {
+                "path": "/",
+                "protocol": "HTTP/1.1",
+                "method": "GET",
+                "sourceIp": "27.0.53.126",
+                "userAgent": "PostmanRuntime/7.33.0"
+            },
+            "time": "02/Feb/2024:15:25:34 +0000",
+            "apiId": "u2xb63vnab7qm5rfud3evncbsq0fvvqm"
+        },
+        "body": "{\n    \"name\": 1\n}",
+        "version": "2.0",
+        "rawQueryString": ""
+    }
+}

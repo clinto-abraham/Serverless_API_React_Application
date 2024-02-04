@@ -1,21 +1,35 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import "../styles/Note.css";
 import CreateNote from "../components/Notes/CreateNote.jsx";
 import Notes from "../components/Notes/Notes.jsx";
 import { v4 as uuid } from "uuid";
 import Header from "../components/Header/index.jsx";
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import api from "../api";
+import apiBearer from "../api/apiBearer.js";
 
-function Home() {
-  //states
+function Home({ signOut, user }) {
   const [notes, setNotes] = useState([]);
   const [inputText, setInputText] = useState("");
+  
+  useEffect(()=> {
+    const uniqueID = user?.userId
+    const email = user?.signInDetails?.loginId
+    api.get('/').then(res=> console.log(res,19)).catch(err=> console.log(err))
+    api.put('/sign-in', { username : email }).then(res => {
+      console.log(res?.token,21,'success for sign-in')
+      localStorage.setItem('clinto', res?.token)
+    }).catch(err=> console.log(err, 'err'))
 
-  // get text and store in state
+    console.log(uniqueID,email,26)
+  },[user])
+
   const textHandler = (e) => {
     setInputText(e.target.value);
   };
 
-  // add new note to the state array
   const saveHandler = () => {
     setNotes((prevState) => [
       ...prevState,
@@ -24,33 +38,35 @@ function Home() {
         text: inputText
       }
     ]);
-    //clear the textarea
+
     setInputText("");
+    apiBearer.post('/create-notes', { description: inputText }).then(data => console.log(data.message)).catch(err => console.log(err))
   };
 
-  //delete note function
   const deleteNote = (id) => {
     const filteredNotes = notes.filter((note) => note.id !== id);
     setNotes(filteredNotes);
+    apiBearer.patch(`/delete-notes-by-id?id=${id}`).then(data => console.log(data.message)).catch(err => console.log(err))
   };
 
-  //apply the save and get functions using useEffect
-  //get the saved notes and add them to the array
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("Notes"));
-    if (data) {
-      setNotes(data);
-    }
-  }, []);
-
-  //saving data to local storage
   useEffect(() => {
     localStorage.setItem("Notes", JSON.stringify(notes));
   }, [notes]);
 
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("Notes"))
+    apiBearer.get(`/list-all-notes`).then(res => {
+      if(res.data){
+        setNotes(res.data)
+      } else if (data) {
+        setNotes(data);
+      }
+    }).catch(err => console.log(err))
+  }, []);
+
   return (
     <>
-    <Header />
+    <Header signOut={signOut} />
     <div className="notes">
       {notes.map((note) => (
         <Notes
@@ -71,7 +87,8 @@ function Home() {
   );
 }
 
-export default Home;
+const HomePage = withAuthenticator(Home)
+export default HomePage;
 
 
 // import { useTransition } from 'react';

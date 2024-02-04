@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
-import { Amplify } from 'aws-amplify';
+
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 // import UserPool from '../utils/awsExports';
-import amplifyConfiguration from '../amplifyconfiguration.json'
+
 import { useEffect, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-Amplify.configure(amplifyConfiguration);
+// import { Amplify } from 'aws-amplify';
+// import amplifyConfiguration from '../amplifyconfiguration.json'
+// Amplify.configure(amplifyConfiguration);
 
 function CognitoAwsLogin({ signOut, user }) {
   const [seconds, setSeconds] = useState(7);
@@ -35,7 +37,7 @@ function CognitoAwsLogin({ signOut, user }) {
         <main className='home'>
           <Typography variant='h1'>Hello {user?.signInDetails?.loginId}</Typography>
           <Button onClick={handleSignOut}>Sign out</Button>
-          <Button variant='contained' onClick={()=> navigate('/')}>Home</Button>
+          <Button variant='contained' onClick={() => navigate('/')}>Home</Button>
           {/* {user && <Typography variant='paragraph'>You will be redirected to Note app in {seconds}</Typography>} */}
         </main>
   );

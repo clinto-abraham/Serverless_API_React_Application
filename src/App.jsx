@@ -3,22 +3,15 @@ import './styles/App.css'
 import { Suspense, lazy } from 'react'
 import { BrowserRouter,Routes, Route  } from 'react-router-dom';
 import Home from './pages/Home'
-// const Home = lazy(() => import('./pages/Home'));
-const Login = lazy(() => import('./pages/Login'));
-const ListDashboard = lazy(() => import('./pages/ListDashboard'));
-const SignUp = lazy(() => import('./pages/SignUp'));
+const Login = lazy(() => import('./pages/Others/Login'));
+const ListDashboard = lazy(() => import('./pages/Others/ListDashboard'));
+const SignUp = lazy(() => import('./pages/Others/SignUp'));
+const SignInSide = lazy(() => import('./pages/Others/SignIn'));
 import ErrorBoundary from './ErrorHandlers/Component';
-import SignInSide from "./pages/SignIn";
-
+import { Amplify } from 'aws-amplify';
+import amplifyConfiguration from './amplifyconfiguration.json'
+Amplify.configure(amplifyConfiguration);
 function App() {
-
-  // useEffect(()=>{
-  //   let user = UserPool.getCurrentUser();
-  //     if(user){
-  //       <Navigate to="/list-dashboard" replace />
-  //     }
-  // },[]);
-
   return (
     <BrowserRouter>
       <Routes>

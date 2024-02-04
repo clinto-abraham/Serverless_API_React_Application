@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import LinearProgress from "@mui/material/LinearProgress";
 function CreateNote({ textHandler, saveHandler, inputText }) {
-  //character limit
   const charLimit = 100;
   const charLeft = charLimit - inputText.length;
   return (

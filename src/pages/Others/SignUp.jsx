@@ -177,8 +177,8 @@ export default function SignUp() {
   );
 }
 
-import UserPool from '../utils/awsExports';
-import { Navigate, useNavigate } from 'react-router-dom';
+import UserPool from '../../utils/awsExports';
+import {  useNavigate } from 'react-router-dom';
 
 // import { Button, TextField} from '@mui/material'
 // import { useState } from 'react'
