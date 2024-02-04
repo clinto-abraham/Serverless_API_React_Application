@@ -10,15 +10,23 @@ import '@aws-amplify/ui-react/styles.css';
 import api from "../api";
 import apiBearer from "../api/apiBearer.js";
 
+const clinto = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphbWVzQHlvcG1haWwuY29tIiwiaWF0IjoxNzA3MDUzOTMyLCJleHAiOjE3MDcwNTc1MzJ9.snJc9viZRMy7YrfHKfYsLj5oRy456afZB7PwOAE9lmA'
 function Home({ signOut, user }) {
   const [notes, setNotes] = useState([]);
   const [inputText, setInputText] = useState("");
+  // const [clinto, setClinto] = useState('')
+  // const token = localStorage.getItem('clinto')
   
+  // useEffect(()=> {
+  //   if(token) setClinto(token)
+  // },[token])
+  console.log(notes, 23)
+
   useEffect(()=> {
     const uniqueID = user?.userId
     const email = user?.signInDetails?.loginId
     api.get('/').then(res=> console.log(res,19)).catch(err=> console.log(err))
-    api.put('/sign-in', { username : email }).then(res => {
+    apiBearer.put(`/sign-in`, { username : email }).then(res => {
       console.log(res?.token,21,'success for sign-in')
       localStorage.setItem('clinto', res?.token)
     }).catch(err=> console.log(err, 'err'))
@@ -34,19 +42,19 @@ function Home({ signOut, user }) {
     setNotes((prevState) => [
       ...prevState,
       {
-        id: uuid(),
-        text: inputText
+        listID: uuid(),
+        description: inputText
       }
     ]);
 
     setInputText("");
-    apiBearer.post('/create-notes', { description: inputText }).then(data => console.log(data.message)).catch(err => console.log(err))
+    api.post(`/create-notes?token=${clinto}`, { description: inputText }).then(data => console.log(data.message)).catch(err => console.log(err))
   };
 
   const deleteNote = (id) => {
     const filteredNotes = notes.filter((note) => note.id !== id);
     setNotes(filteredNotes);
-    apiBearer.patch(`/delete-notes-by-id?id=${id}`).then(data => console.log(data.message)).catch(err => console.log(err))
+    apiBearer.patch(`/delete-notes-by-id?id=${id}&token=${clinto}`).then(data => console.log(data.message)).catch(err => console.log(err))
   };
 
   useEffect(() => {
@@ -55,10 +63,12 @@ function Home({ signOut, user }) {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("Notes"))
-    apiBearer.get(`/list-all-notes`).then(res => {
+    api.get(`/list-all-notes?token=${clinto}`).then(res => {
       if(res.data){
-        setNotes(res.data)
+        console.log('hit', 67, res.data.data)
+        setNotes(res.data.data)
       } else if (data) {
+        console.log('hit', 70)
         setNotes(data);
       }
     }).catch(err => console.log(err))
@@ -70,9 +80,9 @@ function Home({ signOut, user }) {
     <div className="notes">
       {notes.map((note) => (
         <Notes
-          key={note.id}
-          id={note.id}
-          text={note.text}
+          key={note.listID + note.description}
+          id={note.listID}
+          text={note.description}
           deleteNote={deleteNote}
         />
       ))}
@@ -89,7 +99,9 @@ function Home({ signOut, user }) {
 
 const HomePage = withAuthenticator(Home)
 export default HomePage;
-
+// key={note.id}
+          // id={note.id}
+          // text={note.text}
 
 // import { useTransition } from 'react';
 // import { useNavigate } from 'react-router-dom'

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Button } from "@mui/material";
 import { useTransition } from "react";
@@ -8,8 +9,6 @@ function Header({ signOut }) {
         localStorage.removeItem('clinto');
         signOut()
       }
-      console.log(pending)
-
     return (
         <div className="header">
             <h1 className="notes__title">Notes</h1>

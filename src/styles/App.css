@@ -4,6 +4,9 @@
   width: 100%;
 }
 
+.white{
+  color: #fff;
+}
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap");
 body {
   background-image: url("https://i.ibb.co/cbHkZjQ/background.jpg");

@@ -28,11 +28,11 @@ class ErrorBoundary extends React.Component {
     render() {
         if (this.state.hasError) {  
             return <>
-                <h1>Something went wrong.</h1>
-                <p>{this.props.name}</p>
-                <p>{this.state.error?.message}</p>
-                {this.state.errorInfo.map(state => <p key={state}>{state}</p>)}
-                <p>{this.state.error?.stack}</p>
+                <h1 className="white">Something went wrong.</h1>
+                <p className="white">{this.props.name}</p>
+                <p className="white">{this.state.error?.message}</p>
+                {this.state.errorInfo.map(state => <p className="white" key={state}>{state}</p>)}
+                <p className="white">{this.state.error?.stack}</p>
             </>;
         }
         return this.props.children;
